@@ -1,0 +1,929 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>DevOps Resources</title>
+<style type="text/css">
+    li { list-style: none;  margin: 0; }
+    p { margin: 0; }
+    span.foldopened { color: white; font-size: xx-small;
+    border-width: 1; font-family: monospace; padding: 0em 0.25em 0em 0.25em; background: #e0e0e0;
+    VISIBILITY: visible;
+    cursor:pointer; }
+
+
+    span.foldclosed { color: #666666; font-size: xx-small;
+    border-width: 1; font-family: monospace; padding: 0em 0.25em 0em 0.25em; background: #e0e0e0;
+    VISIBILITY: hidden;
+    cursor:pointer; }
+
+    span.foldspecial { color: #666666; font-size: xx-small; border-style: none solid solid none;
+    border-color: #CCCCCC; border-width: 1; font-family: sans-serif; padding: 0em 0.1em 0em 0.1em; background: #e0e0e0;
+    cursor:pointer; }
+
+    span.l { color: red; font-weight: bold; }
+
+    a.mapnode:link {text-decoration: none; color: black; }
+    a.mapnode:visited {text-decoration: none; color: black; }
+    a.mapnode:active {text-decoration: none; color: black; }
+    a.mapnode:hover {text-decoration: none; color: black; background: #eeeee0; }
+
+</style>
+<!-- ^ Position is not set to relative / absolute here because of Mozilla -->
+</head>
+<body>
+
+<script type="text/javascript">
+   // Here we implement folding. It works fine with MSIE5.5, MSIE6.0 and
+   // Mozilla 0.9.6.
+
+   if (document.layers) {
+      //Netscape 4 specific code
+      pre = 'document.';
+      post = ''; }
+   if (document.getElementById) {
+      //Netscape 6 specific code
+      pre = 'document.getElementById("';
+      post = '").style'; }
+   if (document.all) {
+      //IE4+ specific code
+      pre = 'document.all.';
+      post = '.style'; }
+
+function layer_exists(layer) {
+   try {
+      eval(pre + layer + post);
+      return true; }
+   catch (error) {
+      return false; }}
+
+function show_layer(layer) {
+   eval(pre + layer + post).position = 'relative'; 
+   eval(pre + layer + post).visibility = 'visible'; }
+
+function hide_layer(layer) {
+   eval(pre + layer + post).visibility = 'hidden';
+   eval(pre + layer + post).position = 'absolute'; }
+
+function hide_folder(folder) {
+    hide_folding_layer(folder)
+    show_layer('show'+folder);
+
+    scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)
+}
+
+function show_folder(folder) {
+    // Precondition: all subfolders are folded
+
+    show_layer('hide'+folder);
+    hide_layer('show'+folder);
+    show_layer('fold'+folder);
+
+    scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)
+
+    var i;
+    for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {
+       show_layer('show'+folder+'_'+i); }
+}
+function show_folder_completely(folder) {
+    // Precondition: all subfolders are folded
+
+    show_layer('hide'+folder);
+    hide_layer('show'+folder);
+    show_layer('fold'+folder);
+
+    scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)
+
+    var i;
+    for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {
+       show_folder_completely(folder+'_'+i); }
+}
+
+
+
+function hide_folding_layer(folder) {
+   var i;
+   for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {
+       hide_folding_layer(folder+'_'+i); }
+
+   hide_layer('hide'+folder);
+   hide_layer('show'+folder);
+   hide_layer('fold'+folder);
+
+   scrollBy(0,0); // This is a work around to make it work in Browsers (Explorer, Mozilla)
+}
+
+function fold_document() {
+   var i;
+   var folder = '1';
+   for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {
+       hide_folder(folder+'_'+i); }
+}
+
+function unfold_document() {
+   var i;
+   var folder = '1';
+   for (i=1; layer_exists('fold'+folder+'_'+i); ++i) {
+       show_folder_completely(folder+'_'+i); }
+}
+
+</script>
+<SPAN class="foldspecial" onclick="fold_document()">All +</SPAN>
+<SPAN class="foldspecial" onclick="unfold_document()">All -</SPAN>
+<p>DevOps Resources
+<ul><li>Tools
+<ul><li>OS
+<ul><li><span id="show1_1" class="foldclosed" onClick="show_folder('1_1')" style="POSITION: absolute">+</span> <span id="hide1_1" class="foldopened" onClick="hide_folder('1_1')">-</span>
+<a href="http://smartos.org/" target="_blank"><span class=l>~</span>&nbsp;SmartOS
+</a>
+<ul id="fold1_1" style="POSITION: relative; VISIBILITY: visible;"><li>ZFS
+
+</li>
+<li>OS-based virtualization (Zones)
+
+</li>
+<li>Network virtualization (Crossbow)
+
+</li>
+<li><span id="show1_1_1" class="foldclosed" onClick="show_folder('1_1_1')" style="POSITION: absolute">+</span> <span id="hide1_1_1" class="foldopened" onClick="hide_folder('1_1_1')">-</span>
+DTrace
+<ul id="fold1_1_1" style="POSITION: relative; VISIBILITY: visible;"><li>ad-hoc instrumentation
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Monitoring
+<ul><li><span id="show1_2" class="foldclosed" onClick="show_folder('1_2')" style="POSITION: absolute">+</span> <span id="hide1_2" class="foldopened" onClick="hide_folder('1_2')">-</span>
+<a href="http://www.sonian.com/cloud-monitoring-sensu/" target="_blank"><span class=l>~</span>&nbsp;Sensu
+</a>
+<ul id="fold1_2" style="POSITION: relative; VISIBILITY: visible;"><li><p>Nagios wasn't built for cloud - can't discover machines
+<p>built with the intention of being paired with a CM tool
+<p>uses RabbitMQ to securely route check requests and results, making it possible to scale out and back in on demand
+<p>uses Redis as a non-persistent database, to store client and event data
+<p>schedule the remote execution of checks and collect their results
+<p><a href="https://github.com/sonian/sensu" target="_blank"><span class=l>~</span>&nbsp;GitHub
+</a>
+</li>
+</ul>
+</li>
+<li><a href="www.nagios.org" target="_blank"><span class=l>~</span>&nbsp;Nagios
+</a>
+
+</li>
+<li><span id="show1_3" class="foldclosed" onClick="show_folder('1_3')" style="POSITION: absolute">+</span> <span id="hide1_3" class="foldopened" onClick="hide_folder('1_3')">-</span>
+<a href="http://munin-monitoring.org/" target="_blank"><span class=l>~</span>&nbsp;Munin
+</a>
+<ul id="fold1_3" style="POSITION: relative; VISIBILITY: visible;"><li>networked resource monitoring tool that can help analyze resource trends
+
+</li>
+
+</ul>
+</li>
+<li><a href="http://www.axibase.com" target="_blank"><span class=l>~</span>&nbsp;Axibase
+</a>
+
+</li>
+<li><a href="www.firescope.com" target="_blank"><span class=l>~</span>&nbsp;Firescope
+</a>
+
+</li>
+<li><span id="show1_4" class="foldclosed" onClick="show_folder('1_4')" style="POSITION: absolute">+</span> <span id="hide1_4" class="foldopened" onClick="hide_folder('1_4')">-</span>
+<a href="http://ganglia.sourceforge.net/" target="_blank"><span class=l>~</span>&nbsp;Ganglia
+</a>
+<ul id="fold1_4" style="POSITION: relative; VISIBILITY: visible;"><li><p>OS
+<p>"scalable distributed monitoring system for high-performance computing systems such as clusters and grids"
+<p>XML for data representation
+<p>XDR for compact, portable data transport
+<p>RRDtool for data storage and visualization
+<p>agent-based
+</li>
+</ul>
+</li>
+<li><span id="show1_5" class="foldclosed" onClick="show_folder('1_5')" style="POSITION: absolute">+</span> <span id="hide1_5" class="foldopened" onClick="hide_folder('1_5')">-</span>
+<a href="http://oss.oetiker.ch/rrdtool/" target="_blank"><span class=l>~</span>&nbsp;RRDtool
+</a>
+<ul id="fold1_5" style="POSITION: relative; VISIBILITY: visible;"><li>OS
+
+</li>
+<li>"industry standard, high performance data logging and graphing system for time series data"
+
+</li>
+<li>Round Robin Database tool
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_6" class="foldclosed" onClick="show_folder('1_6')" style="POSITION: absolute">+</span> <span id="hide1_6" class="foldopened" onClick="hide_folder('1_6')">-</span>
+<a href="http://graphite.wikidot.com/" target="_blank"><span class=l>~</span>&nbsp;Graphite
+</a>
+<ul id="fold1_6" style="POSITION: relative; VISIBILITY: visible;"><li>Scalable Realtime Graphing
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_7" class="foldclosed" onClick="show_folder('1_7')" style="POSITION: absolute">+</span> <span id="hide1_7" class="foldopened" onClick="hide_folder('1_7')">-</span>
+<a href="http://www.cacti.net/" target="_blank"><span class=l>~</span>&nbsp;Cacti
+</a>
+<ul id="fold1_7" style="POSITION: relative; VISIBILITY: visible;"><li>OS
+
+</li>
+<li>Front-end for RRDtool
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_8" class="foldclosed" onClick="show_folder('1_8')" style="POSITION: absolute">+</span> <span id="hide1_8" class="foldopened" onClick="hide_folder('1_8')">-</span>
+<a href="http://collectd.org/" target="_blank"><span class=l>~</span>&nbsp;Collectd
+</a>
+<ul id="fold1_8" style="POSITION: relative; VISIBILITY: visible;"><li>"collects system performance statistics periodically and provides mechanisms to store the values"
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_9" class="foldclosed" onClick="show_folder('1_9')" style="POSITION: absolute">+</span> <span id="hide1_9" class="foldopened" onClick="hide_folder('1_9')">-</span>
+<a href="http://www.hyperic.com/" target="_blank"><span class=l>~</span>&nbsp;Hyperic
+</a>
+<ul id="fold1_9" style="POSITION: relative; VISIBILITY: visible;"><li>VMWare
+
+</li>
+<li>OS &amp; Enterprise
+
+</li>
+<li>Agent-based
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_10" class="foldclosed" onClick="show_folder('1_10')" style="POSITION: absolute">+</span> <span id="hide1_10" class="foldopened" onClick="hide_folder('1_10')">-</span>
+"Monitoring Sucks"
+<ul id="fold1_10" style="POSITION: relative; VISIBILITY: visible;"><li>tweeted by Sean Porter (Sensu)
+
+</li>
+<li><a href="http://lusislog.blogspot.com.au/2011/06/why-monitoring-sucks.html" target="_blank"><span class=l>~</span>&nbsp;John Vincent: lusislog.blogspot
+</a>
+
+</li>
+<li>https://github.com/monitoringsucks/
+
+</li>
+<li><span id="show1_10_1" class="foldclosed" onClick="show_folder('1_10_1')" style="POSITION: absolute">+</span> <span id="hide1_10_1" class="foldopened" onClick="hide_folder('1_10_1')">-</span>
+<a href="http://solarce.org/2012/02/12/why-monitoring-sucks-or-the-future-is-a-toolbox/" target="_blank"><span class=l>~</span>&nbsp;Alexis Sellier: Why monitoring sucks or the future is toolbox
+</a>
+<ul id="fold1_10_1" style="POSITION: relative; VISIBILITY: visible;"><li><p>majority of monitoring systems out there are built around workloads and change processes that are no longer valid 
+<p>future of application environments is dynamic, scalable, and ever changing
+</li>
+</ul>
+</li>
+<li><a href="https://github.com/monitoringsucks/blog-posts" target="_blank"><span class=l>~</span>&nbsp;https://github.com/monitoringsucks/blog-posts
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_11" class="foldclosed" onClick="show_folder('1_11')" style="POSITION: absolute">+</span> <span id="hide1_11" class="foldopened" onClick="hide_folder('1_11')">-</span>
+<a href="https://github.com/etsy/statsd" target="_blank"><span class=l>~</span>&nbsp;statsd
+</a>
+<ul id="fold1_11" style="POSITION: relative; VISIBILITY: visible;"><li>Simple daemon for easy stats aggregation
+
+</li>
+<li>Etsy
+
+</li>
+<li>Node.js, UDP, Graphite
+
+</li>
+<li><a href="http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/" target="_blank"><span class=l>~</span>&nbsp;Blog post
+</a>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Config Management
+<ul><li><span id="show1_12" class="foldclosed" onClick="show_folder('1_12')" style="POSITION: absolute">+</span> <span id="hide1_12" class="foldopened" onClick="hide_folder('1_12')">-</span>
+<a href="http://puppetlabs.com/" target="_blank"><span class=l>~</span>&nbsp;Puppet
+</a>
+<ul id="fold1_12" style="POSITION: relative; VISIBILITY: visible;"><li><span id="show1_12_1" class="foldclosed" onClick="show_folder('1_12_1')" style="POSITION: absolute">+</span> <span id="hide1_12_1" class="foldopened" onClick="hide_folder('1_12_1')">-</span>
+<a href="http://docs.puppetlabs.com/learning/" target="_blank"><span class=l>~</span>&nbsp;Learning
+</a>
+<ul id="fold1_12_1" style="POSITION: relative; VISIBILITY: visible;"><li>includes a VM
+
+</li>
+
+</ul>
+</li>
+<li><a href="http://forge.puppetlabs.com" target="_blank"><span class=l>~</span>&nbsp;Forge
+</a>
+
+</li>
+<li><span id="show1_12_2" class="foldclosed" onClick="show_folder('1_12_2')" style="POSITION: absolute">+</span> <span id="hide1_12_2" class="foldopened" onClick="hide_folder('1_12_2')">-</span>
+Approaches/Intros
+<ul id="fold1_12_2" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://checkspace.blogspot.com.au/2011/11/what-is-puppet-enterprise-puppet.html" target="_blank"><span class=l>~</span>&nbsp;http://checkspace.blogspot.com.au/2011/11/what-is-puppet-enterprise-puppet.html
+</a>
+
+</li>
+<li><a href="http://cloudtimes.org/2011/06/16/delivering-on-the-promise-of-cloud-infrastructure/" target="_blank"><span class=l>~</span>&nbsp;http://cloudtimes.org/2011/06/16/delivering-on-the-promise-of-cloud-infrastructure/
+</a>
+
+</li>
+<li><a href="http://lefred.be/?q=node/132" target="_blank"><span class=l>~</span>&nbsp;http://lefred.be/?q=node/132
+</a>
+
+</li>
+<li><a href="http://www.slideshare.net/empoweringmedia/intro-to-puppetkey" target="_blank"><span class=l>~</span>&nbsp;http://www.slideshare.net/empoweringmedia/intro-to-puppetkey
+</a>
+
+</li>
+<li><a href="http://docs.puppetlabs.com/guides/introduction.html" target="_blank"><span class=l>~</span>&nbsp;http://docs.puppetlabs.com/guides/introduction.html
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_12_3" class="foldclosed" onClick="show_folder('1_12_3')" style="POSITION: absolute">+</span> <span id="hide1_12_3" class="foldopened" onClick="hide_folder('1_12_3')">-</span>
+<a href="https://github.com/cloudsmith/geppetto" target="_blank"><span class=l>~</span>&nbsp;Geppetto IDE (Eclipse)
+</a>
+<ul id="fold1_12_3" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://puppetlabs.com/blog/geppetto-a-puppet-ide" target="_blank"><span class=l>~</span>&nbsp;Example with screenshots
+</a>
+
+</li>
+<li><a href="http://blog.cloudsmith.com/?p=803" target="_blank"><span class=l>~</span>&nbsp;Blog post
+</a>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span id="show1_13" class="foldclosed" onClick="show_folder('1_13')" style="POSITION: absolute">+</span> <span id="hide1_13" class="foldopened" onClick="hide_folder('1_13')">-</span>
+<a href="http://www.opscode.com/" target="_blank"><span class=l>~</span>&nbsp;Chef
+</a>
+<ul id="fold1_13" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://learnchef.getharvest.com/introduction.html" target="_blank"><span class=l>~</span>&nbsp;Intro to Chef
+</a>
+
+</li>
+<li><a href="https://github.com/opscode-cookbooks" target="_blank"><span class=l>~</span>&nbsp;Cookbook repository
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><a href="http://www.cfengine.com" target="_blank"><span class=l>~</span>&nbsp;CFEngine
+</a>
+
+</li>
+<li><span id="show1_14" class="foldclosed" onClick="show_folder('1_14')" style="POSITION: absolute">+</span> <span id="hide1_14" class="foldopened" onClick="hide_folder('1_14')">-</span>
+mcollective
+<ul id="fold1_14" style="POSITION: relative; VISIBILITY: visible;"><li>Marionette Collective - now part of Puppet
+
+</li>
+<li>The network is the only source of truth - No database
+
+</li>
+<li>Not simply a fancy SSH &#8220;for loop&#8221;
+
+</li>
+<li>Publish Subscribe Middleware
+
+</li>
+<li>Real time discovery of network resources using meta data - not hostnames
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Logging
+<ul><li><span id="show1_15" class="foldclosed" onClick="show_folder('1_15')" style="POSITION: absolute">+</span> <span id="hide1_15" class="foldopened" onClick="hide_folder('1_15')">-</span>
+<a href="http://logstash.net/" target="_blank"><span class=l>~</span>&nbsp;Logstash
+</a>
+<ul id="fold1_15" style="POSITION: relative; VISIBILITY: visible;"><li><p><a href="https://github.com/logstash/logstash" target="_blank"><span class=l>~</span>&nbsp;GitHub
+</a>
+<p>logstash is a tool for managing events and logs. You can use it to collect logs, parse them, and store them for later use (like, for searching). Speaking of searching, logstash comes with a web interface for searching and drilling into all of your logs.
+</li>
+</ul>
+</li>
+<li><span id="show1_16" class="foldclosed" onClick="show_folder('1_16')" style="POSITION: absolute">+</span> <span id="hide1_16" class="foldopened" onClick="hide_folder('1_16')">-</span>
+<a href="http://graylog2.org/" target="_blank"><span class=l>~</span>&nbsp;<span style="font-family: SansSerif, sans-serif; ">Graylog2</span>
+</a>
+<ul id="fold1_16" style="POSITION: relative; VISIBILITY: visible;"><li><p><a href="https://github.com/Graylog2" target="_blank"><span class=l>~</span>&nbsp;GitHub
+</a>
+<p>Graylog2 is an open source log management solution that stores your logs in ElasticSearch. It consists of a server written in Java that accepts your syslog messages via TCP, UDP or AMQP and stores it in the database. The second part is a web interface that allows you to manage the log messages from your web browser.
+</li>
+</ul>
+</li>
+<li><span id="show1_17" class="foldclosed" onClick="show_folder('1_17')" style="POSITION: absolute">+</span> <span id="hide1_17" class="foldopened" onClick="hide_folder('1_17')">-</span>
+<a href="https://cwiki.apache.org/FLUME/" target="_blank"><span class=l>~</span>&nbsp;Flume
+</a>
+<ul id="fold1_17" style="POSITION: relative; VISIBILITY: visible;"><li><p>Flume is a distributed, reliable, and available service for efficiently collecting, aggregating, and moving large amounts of log data. It has a simple and flexible architecture based on streaming data flows. It is robust and fault tolerant with tunable reliability mechanisms and many failover and recovery mechanisms. The system is centrally managed and allows for intelligent dynamic management. It uses a simple extensible data model that allows for online analytic application
+</li>
+</ul>
+</li>
+<li><span id="show1_18" class="foldclosed" onClick="show_folder('1_18')" style="POSITION: absolute">+</span> <span id="hide1_18" class="foldopened" onClick="hide_folder('1_18')">-</span>
+<a href="http://loggly.com" target="_blank"><span class=l>~</span>&nbsp;Loggly
+</a>
+<ul id="fold1_18" style="POSITION: relative; VISIBILITY: visible;"><li><p>Logging as a service (SaaS in the cloud - you send logs to them instead of installing the software)
+<p>Loggly provides a cloud based application intelligence solution for app developers. &nbsp;Loggly indexes application log data which can be used to troubleshoot, monitor and analyze customer usage.
+<p><a href="http://www.youtube.com/watch?v=9LnpFCrX2uc" target="_blank"><span class=l>~</span>&nbsp;Google Tech Talk
+</a>
+<p><a href="http://www.slideshare.net/zrlram/log-historyvis" target="_blank"><span class=l>~</span>&nbsp;Slides for above
+</a>
+</li>
+</ul>
+</li>
+<li>Splunk
+
+</li>
+<li><span id="show1_19" class="foldclosed" onClick="show_folder('1_19')" style="POSITION: absolute">+</span> <span id="hide1_19" class="foldopened" onClick="hide_folder('1_19')">-</span>
+Log visualisation Google Talk
+<ul id="fold1_19" style="POSITION: relative; VISIBILITY: visible;"><li>Raffael Marty
+
+</li>
+<li><span id="show1_19_1" class="foldclosed" onClick="show_folder('1_19_1')" style="POSITION: absolute">+</span> <span id="hide1_19_1" class="foldopened" onClick="hide_folder('1_19_1')">-</span>
+History
+<ul id="fold1_19_1" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://www.youtube.com/watch?v=9LnpFCrX2uc" target="_blank"><span class=l>~</span>&nbsp;Loggly COO Google Talk
+</a>
+
+</li>
+<li><span id="show1_19_1_1" class="foldclosed" onClick="show_folder('1_19_1_1')" style="POSITION: absolute">+</span> <span id="hide1_19_1_1" class="foldopened" onClick="hide_folder('1_19_1_1')">-</span>
+Network Management (SNMP)
+<ul id="fold1_19_1_1" style="POSITION: relative; VISIBILITY: visible;"><li>Tivoli
+
+</li>
+<li>HP OpenView
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_1_2" class="foldclosed" onClick="show_folder('1_19_1_2')" style="POSITION: absolute">+</span> <span id="hide1_19_1_2" class="foldopened" onClick="hide_folder('1_19_1_2')">-</span>
+Security Information Management (SIM)
+<ul id="fold1_19_1_2" style="POSITION: relative; VISIBILITY: visible;"><li>Network intrusion detection system (IDS)
+
+</li>
+<li>false positives
+
+</li>
+
+</ul>
+</li>
+<li>Unification of SOC and NOC (failed?)
+
+</li>
+<li><span id="show1_19_1_3" class="foldclosed" onClick="show_folder('1_19_1_3')" style="POSITION: absolute">+</span> <span id="hide1_19_1_3" class="foldopened" onClick="hide_folder('1_19_1_3')">-</span>
+Application monitoring
+<ul id="fold1_19_1_3" style="POSITION: relative; VISIBILITY: visible;"><li>Initial RDBMS attempts couldn't scale
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_2" class="foldclosed" onClick="show_folder('1_19_2')" style="POSITION: absolute">+</span> <span id="hide1_19_2" class="foldopened" onClick="hide_folder('1_19_2')">-</span>
+Maturity
+<ul id="fold1_19_2" style="POSITION: relative; VISIBILITY: visible;"><li>DIY
+
+</li>
+<li><span id="show1_19_2_1" class="foldclosed" onClick="show_folder('1_19_2_1')" style="POSITION: absolute">+</span> <span id="hide1_19_2_1" class="foldopened" onClick="hide_folder('1_19_2_1')">-</span>
+Log Mgmt
+<ul id="fold1_19_2_1" style="POSITION: relative; VISIBILITY: visible;"><li>gralog2, logstash
+
+</li>
+
+</ul>
+</li>
+<li>Complex Event Processing (CEP) &amp; Security Information and Event Mgmt (SIEM) &amp; MapReduce
+
+</li>
+<li><span id="show1_19_2_2" class="foldclosed" onClick="show_folder('1_19_2_2')" style="POSITION: absolute">+</span> <span id="hide1_19_2_2" class="foldopened" onClick="hide_folder('1_19_2_2')">-</span>
+Advanced Analytics
+<ul id="fold1_19_2_2" style="POSITION: relative; VISIBILITY: visible;"><li>Cognos
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_3" class="foldclosed" onClick="show_folder('1_19_3')" style="POSITION: absolute">+</span> <span id="hide1_19_3" class="foldopened" onClick="hide_folder('1_19_3')">-</span>
+Log Mgmt Architecture
+<ul id="fold1_19_3" style="POSITION: relative; VISIBILITY: visible;"><li><span id="show1_19_3_1" class="foldclosed" onClick="show_folder('1_19_3_1')" style="POSITION: absolute">+</span> <span id="hide1_19_3_1" class="foldopened" onClick="hide_folder('1_19_3_1')">-</span>
+Collection
+<ul id="fold1_19_3_1" style="POSITION: relative; VISIBILITY: visible;"><li>syslog
+
+</li>
+<li>OPSEC
+
+</li>
+<li>SDEE
+
+</li>
+<li>netflow
+
+</li>
+<li>database
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_3_2" class="foldclosed" onClick="show_folder('1_19_3_2')" style="POSITION: absolute">+</span> <span id="hide1_19_3_2" class="foldopened" onClick="hide_folder('1_19_3_2')">-</span>
+Processing
+<ul id="fold1_19_3_2" style="POSITION: relative; VISIBILITY: visible;"><li>indexing
+
+</li>
+<li>context storage
+
+</li>
+<li>clustering
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_3_3" class="foldclosed" onClick="show_folder('1_19_3_3')" style="POSITION: absolute">+</span> <span id="hide1_19_3_3" class="foldopened" onClick="hide_folder('1_19_3_3')">-</span>
+Data Access
+<ul id="fold1_19_3_3" style="POSITION: relative; VISIBILITY: visible;"><li>free-text search
+
+</li>
+<li>field-based search
+
+</li>
+<li>tagging schemas
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_4" class="foldclosed" onClick="show_folder('1_19_4')" style="POSITION: absolute">+</span> <span id="hide1_19_4" class="foldopened" onClick="hide_folder('1_19_4')">-</span>
+Agents/Connectors
+<ul id="fold1_19_4" style="POSITION: relative; VISIBILITY: visible;"><li><span id="show1_19_4_1" class="foldclosed" onClick="show_folder('1_19_4_1')" style="POSITION: absolute">+</span> <span id="hide1_19_4_1" class="foldopened" onClick="hide_folder('1_19_4_1')">-</span>
+features
+<ul id="fold1_19_4_1" style="POSITION: relative; VISIBILITY: visible;"><li>batch
+
+</li>
+<li>compress
+
+</li>
+<li>encrypt
+
+</li>
+<li>sign
+
+</li>
+<li>fail-over
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_4_2" class="foldclosed" onClick="show_folder('1_19_4_2')" style="POSITION: absolute">+</span> <span id="hide1_19_4_2" class="foldopened" onClick="hide_folder('1_19_4_2')">-</span>
+additional features
+<ul id="fold1_19_4_2" style="POSITION: relative; VISIBILITY: visible;"><li>parse
+
+</li>
+<li>normalise
+
+</li>
+<li>aggregate
+
+</li>
+<li>enrich with context info
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_19_4_3" class="foldclosed" onClick="show_folder('1_19_4_3')" style="POSITION: absolute">+</span> <span id="hide1_19_4_3" class="foldopened" onClick="hide_folder('1_19_4_3')">-</span>
+special protocols
+<ul id="fold1_19_4_3" style="POSITION: relative; VISIBILITY: visible;"><li>OPSEC, SDEE
+
+</li>
+<li>Windows
+
+</li>
+
+</ul>
+</li>
+<li>file-based collection
+
+</li>
+<li>database collection
+
+</li>
+
+</ul>
+</li>
+<li><a href="http://www.networkworld.com/news/tech/2009/031909-tech-update.html" target="_blank"><span class=l>~</span>&nbsp;The convergence of SIEM and log management
+</a>
+
+</li>
+<li>Logging as a Service (LaaS)
+
+</li>
+<li><span id="show1_19_5" class="foldclosed" onClick="show_folder('1_19_5')" style="POSITION: absolute">+</span> <span id="hide1_19_5" class="foldopened" onClick="hide_folder('1_19_5')">-</span>
+Visualisation
+<ul id="fold1_19_5" style="POSITION: relative; VISIBILITY: visible;"><li>Treemap
+
+</li>
+<li>Amount/Variance/Sensor
+
+</li>
+<li>Chris Horsley
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>What is DevOps
+<ul><li>Patrick Debois: Collaboration
+
+</li>
+<li><span id="show1_20" class="foldclosed" onClick="show_folder('1_20')" style="POSITION: absolute">+</span> <span id="hide1_20" class="foldopened" onClick="hide_folder('1_20')">-</span>
+Adam Jacob: A cultural and professional movement
+<ul id="fold1_20" style="POSITION: relative; VISIBILITY: visible;"><li>Not tools
+
+</li>
+<li><span id="show1_20_1" class="foldclosed" onClick="show_folder('1_20_1')" style="POSITION: absolute">+</span> <span id="hide1_20_1" class="foldopened" onClick="hide_folder('1_20_1')">-</span>
+Not a job description
+<ul id="fold1_20_1" style="POSITION: relative; VISIBILITY: visible;"><li>It's you
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Breaking down silos
+
+</li>
+<li>Damon Edwards &amp; John Willis: Hashtag
+
+</li>
+
+</ul>
+</li>
+<li>People
+<ul><li><span id="show1_21" class="foldclosed" onClick="show_folder('1_21')" style="POSITION: absolute">+</span> <span id="hide1_21" class="foldopened" onClick="hide_folder('1_21')">-</span>
+Patrick Debois
+<ul id="fold1_21" style="POSITION: relative; VISIBILITY: visible;"><li>Coined "DevOps"
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_22" class="foldclosed" onClick="show_folder('1_22')" style="POSITION: absolute">+</span> <span id="hide1_22" class="foldopened" onClick="hide_folder('1_22')">-</span>
+John Allspaw
+<ul id="fold1_22" style="POSITION: relative; VISIBILITY: visible;"><li>Flickr, Etsy
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_23" class="foldclosed" onClick="show_folder('1_23')" style="POSITION: absolute">+</span> <span id="hide1_23" class="foldopened" onClick="hide_folder('1_23')">-</span>
+Adam Jacob
+<ul id="fold1_23" style="POSITION: relative; VISIBILITY: visible;"><li>Chef
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_24" class="foldclosed" onClick="show_folder('1_24')" style="POSITION: absolute">+</span> <span id="hide1_24" class="foldopened" onClick="hide_folder('1_24')">-</span>
+Jesse Robbins
+<ul id="fold1_24" style="POSITION: relative; VISIBILITY: visible;"><li>Opscode
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_25" class="foldclosed" onClick="show_folder('1_25')" style="POSITION: absolute">+</span> <span id="hide1_25" class="foldopened" onClick="hide_folder('1_25')">-</span>
+Luke Kanies
+<ul id="fold1_25" style="POSITION: relative; VISIBILITY: visible;"><li>Puppet
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_26" class="foldclosed" onClick="show_folder('1_26')" style="POSITION: absolute">+</span> <span id="hide1_26" class="foldopened" onClick="hide_folder('1_26')">-</span>
+R.I.Pineear
+<ul id="fold1_26" style="POSITION: relative; VISIBILITY: visible;"><li>mcollective
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_27" class="foldclosed" onClick="show_folder('1_27')" style="POSITION: absolute">+</span> <span id="hide1_27" class="foldopened" onClick="hide_folder('1_27')">-</span>
+Mark Burgess
+<ul id="fold1_27" style="POSITION: relative; VISIBILITY: visible;"><li>CFEngine, Convergence, Promise Theory
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_28" class="foldclosed" onClick="show_folder('1_28')" style="POSITION: absolute">+</span> <span id="hide1_28" class="foldopened" onClick="hide_folder('1_28')">-</span>
+Damon Edwards / John Willis
+<ul id="fold1_28" style="POSITION: relative; VISIBILITY: visible;"><li>DevOps Cafe podcast
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Info
+<ul><li><span id="show1_29" class="foldclosed" onClick="show_folder('1_29')" style="POSITION: absolute">+</span> <span id="hide1_29" class="foldopened" onClick="hide_folder('1_29')">-</span>
+Email Newsletters
+<ul id="fold1_29" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://devopsweekly.com" target="_blank"><span class=l>~</span>&nbsp;Devops Weekly
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_30" class="foldclosed" onClick="show_folder('1_30')" style="POSITION: absolute">+</span> <span id="hide1_30" class="foldopened" onClick="hide_folder('1_30')">-</span>
+Podcasts
+<ul id="fold1_30" style="POSITION: relative; VISIBILITY: visible;"><li><a href="devopscafe.org" target="_blank"><span class=l>~</span>&nbsp;DevOps Cafe
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_31" class="foldclosed" onClick="show_folder('1_31')" style="POSITION: absolute">+</span> <span id="hide1_31" class="foldopened" onClick="hide_folder('1_31')">-</span>
+Books
+<ul id="fold1_31" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://www.amazon.com/Lean-Enabling-Sustaining-Your-Transformation/dp/1439817561" target="_blank"><span class=l>~</span>&nbsp;Lean IT: Stephen Bell, Michael Orzen
+</a>
+
+</li>
+<li><a href="http://www.itpi.org/?page=Visible_Ops" target="_blank"><span class=l>~</span>&nbsp;Visible Ops: IT Process Institute
+</a>
+
+</li>
+<li><a href="http://www.informit.com/store/product.aspx?isbn=0321601912" target="_blank"><span class=l>~</span>&nbsp;Continuous Delivery: Jez Humble
+</a>
+
+</li>
+<li><a href="http://www.amazon.com/Management-Challenges-Century-Peter-Drucker/dp/0887309984" target="_blank"><span class=l>~</span>&nbsp;Management Challenges for the 21st Century: Peter Drucker
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_32" class="foldclosed" onClick="show_folder('1_32')" style="POSITION: absolute">+</span> <span id="hide1_32" class="foldopened" onClick="hide_folder('1_32')">-</span>
+Presentations
+<ul id="fold1_32" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://cuddletech.com/blog/?p=695" target="_blank"><span class=l>~</span>&nbsp;Ben Rockwood: LISA Keynote 2011: The DevOps Transformation
+</a>
+
+</li>
+<li><a href="http://blip.tv/oreilly-velocity-conference/velocity-09-john-allspaw-10-deploys-per-day-dev-and-ops-cooperation-at-flickr-2297883" target="_blank"><span class=l>~</span>&nbsp;John Allspaw: Velocity 2009: "10+ Deploys Per Day: Dev and Ops Cooperation at Flickr"
+</a>
+
+</li>
+<li><a href="http://www.youtube.com/watch?v=T-Xr_PJdNmQ" target="_blank"><span class=l>~</span>&nbsp;Tom Cook: Velocity 2010: "A Day in the Life of Facebook Operations"
+</a>
+
+</li>
+<li><a href="http://www.infoq.com/presentations/infrastructure-as-code" target="_blank"><span class=l>~</span>&nbsp;InfoQ: Infrastructure as Code Panel: Theo Schlossnagle, Luke Kanies, Adam Jacobs, Erik Troan
+</a>
+
+</li>
+<li><a href="http://dev2ops.org/blog/2011/6/30/more-video-with-john-allspaw-at-etsy-dashboard-tour-metrics.html" target="_blank"><span class=l>~</span>&nbsp;John Allspaw at Etsy: Dashboard tour &amp; metrics discussion 
+</a>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Culture
+<ul><li>Agile
+
+</li>
+<li><span id="show1_33" class="foldclosed" onClick="show_folder('1_33')" style="POSITION: absolute">+</span> <span id="hide1_33" class="foldopened" onClick="hide_folder('1_33')">-</span>
+John Willis
+<ul id="fold1_33" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://www.opscode.com/blog/2010/07/16/what-devops-means-to-me/" target="_blank"><span class=l>~</span>&nbsp;CAMS: It all starts with Culture
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_34" class="foldclosed" onClick="show_folder('1_34')" style="POSITION: absolute">+</span> <span id="hide1_34" class="foldopened" onClick="hide_folder('1_34')">-</span>
+Alex Honor
+<ul id="fold1_34" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://dev2ops.org/blog/2010/2/23/people-over-process-over-tools.html" target="_blank"><span class=l>~</span>&nbsp;People over Processes and Tools
+</a>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Ideas/Approaches
+<ul><li>Value Stream Mapping
+
+</li>
+<li><span id="show1_35" class="foldclosed" onClick="show_folder('1_35')" style="POSITION: absolute">+</span> <span id="hide1_35" class="foldopened" onClick="hide_folder('1_35')">-</span>
+Convergence
+<ul id="fold1_35" style="POSITION: relative; VISIBILITY: visible;"><li><span id="show1_35_1" class="foldclosed" onClick="show_folder('1_35_1')" style="POSITION: absolute">+</span> <span id="hide1_35_1" class="foldopened" onClick="hide_folder('1_35_1')">-</span>
+Mark Burgess
+<ul id="fold1_35_1" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://research.iu.hio.no/promises.php" target="_blank"><span class=l>~</span>&nbsp;Promise Theory
+</a>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span id="show1_36" class="foldclosed" onClick="show_folder('1_36')" style="POSITION: absolute">+</span> <span id="hide1_36" class="foldopened" onClick="hide_folder('1_36')">-</span>
+People over Processes over Tools
+<ul id="fold1_36" style="POSITION: relative; VISIBILITY: visible;"><li>Alex Honor
+
+</li>
+<li>Agile Manifesto
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_37" class="foldclosed" onClick="show_folder('1_37')" style="POSITION: absolute">+</span> <span id="hide1_37" class="foldopened" onClick="hide_folder('1_37')">-</span>
+Lean
+<ul id="fold1_37" style="POSITION: relative; VISIBILITY: visible;"><li><a href="http://dev2ops.org/blog/2012/3/18/devops-lessons-from-lean-small-batches-improve-flow.html" target="_blank"><span class=l>~</span>&nbsp;Damon Edwards: Small Batches Improve Flow
+</a>
+
+</li>
+<li><a href="http://dev2ops.org/blog/2012/3/28/kanban-and-devops-roundtable-video.html" target="_blank"><span class=l>~</span>&nbsp;dev2ops: Kanban solves DevOps flow problems [video]
+</a>
+
+</li>
+
+</ul>
+</li>
+<li><span id="show1_38" class="foldclosed" onClick="show_folder('1_38')" style="POSITION: absolute">+</span> <span id="hide1_38" class="foldopened" onClick="hide_folder('1_38')">-</span>
+Wicked Problem
+<ul id="fold1_38" style="POSITION: relative; VISIBILITY: visible;"><li>Patrick Debois
+
+</li>
+<li>DevOps is not easy
+
+</li>
+
+</ul>
+</li>
+<li><a href="http://www.kitchensoap.com/2012/02/10/each-necessary-but-only-jointly-sufficient/" target="_blank"><span class=l>~</span>&nbsp;John Allspaw: There is no root cause
+</a>
+
+</li>
+
+</ul>
+</li>
+
+</ul><SCRIPT type="text/javascript">
+fold_document();
+</SCRIPT>
+</body>
+</html>
